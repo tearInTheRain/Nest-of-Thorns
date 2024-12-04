@@ -16,10 +16,12 @@ public class MonsterEngine : MonoBehaviour
     private float strengthFactor = 1f;  // 怪物强度因子
 
     private Transform player;
-
+    private ObjectPool objectPool;
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
+        objectPool = GameObject.FindGameObjectWithTag("pool").GetComponent<ObjectPool>();
+
         StartCoroutine(SpawnMonsters());
     }
 
@@ -80,7 +82,7 @@ public class MonsterEngine : MonoBehaviour
             0f
             
         );
-        Instantiate(monster, spawnPosition, Quaternion.identity);
+        objectPool.SpawnFromPool("monster", spawnPosition, Quaternion.identity);
     }
 
     void SpawnFloodMonsters()
@@ -95,7 +97,7 @@ public class MonsterEngine : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0); // 计算方向
             Vector3 spawnPosition = new Vector3(player.position.x, player.position.z, 0) + direction * radius; // 计算生成位置
             Debug.Log(spawnPosition);
-            Instantiate(normalMonsters[Random.Range(0, normalMonsters.Length)], spawnPosition, Quaternion.identity); // 生成怪物
+            objectPool.SpawnFromPool("monster", spawnPosition, Quaternion.identity);
         }
     }
 
@@ -107,7 +109,7 @@ public class MonsterEngine : MonoBehaviour
             0f,
             Random.Range(-15f, 15f)
         );
-        Instantiate(specialMonster, spawnPosition, Quaternion.identity);
+        objectPool.SpawnFromPool("monster", spawnPosition, Quaternion.identity);
     }
 
     void SpawnEliteMonster()
