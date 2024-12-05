@@ -17,11 +17,13 @@ public class Monster : MonoBehaviour, MonsterBase
 
 
     private int hp = 100;
+    private ObjectPool objectPool;
 
     void Start()
     {
         // 获取玩家对象和必要的组件
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
+        objectPool = GameObject.FindGameObjectWithTag("pool").GetComponent<ObjectPool>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -68,7 +70,7 @@ public class Monster : MonoBehaviour, MonsterBase
         }
 
         if(this.hp <= 0) {
-            Destroy(gameObject);
+            objectPool.ReturnToPool("monster", gameObject);
 
             Instantiate(itemDrop, transform.position, Quaternion.identity);
         }

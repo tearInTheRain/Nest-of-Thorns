@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour {
     
+    private List<Buff> buffList = new List<Buff>();
+    private int[] needEx = new int[]{1,2,10,100,1000};
     public BuffEngine buffEngine;
-
-    private int hp;
-
+    private int curEx;
     private int level;
 
-    private int curEx;
 
-    private int[] needEx = new int[]{1,2,10,100,1000};
+
+
+
+    //Buff相关逻辑    
+    private int hp; //生命值
+    private float hpRate; //生命恢复速度
+    private float moveRate;//移动速度
+    private 
+
+
+    
+
 
 
     public int getHp() {
