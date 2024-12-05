@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "StartStart.sln"
+    "dotnet.defaultSolution": "Nest-of-Thorns.sln"
 }

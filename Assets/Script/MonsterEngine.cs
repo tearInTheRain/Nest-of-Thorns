@@ -38,39 +38,68 @@ public class MonsterEngine : MonoBehaviour
         {
             if (spawnTimer >= floodSpawnInterval)
             {
-               SpawnFloodMonsters();
+               //SpawnFloodMonsters();
             }
              
              
             // 刷普通怪物（随着时间推移强度逐渐增加）
             if (spawnTimer >= spawnInterval)
             {
-                SpawnNormalMonster();
+                SpawnNormalMonstero();
                 spawnTimer = 0f;
             }
 
             // 定期刷群怪（包围主角）
             if (spawnTimer >= floodSpawnInterval)
             {
-               SpawnFloodMonsters();
+               //SpawnFloodMonsters();
             }
 
             // 随机刷特殊怪
             if (Random.Range(0f, 1f) < 0.05f)  // 5% 概率随机刷特殊怪
             {
-                SpawnSpecialMonster();
+               // SpawnSpecialMonster();
             }
 
             // 刷精英怪
             if (spawnTimer >= bossSpawnInterval)
             {
-                SpawnEliteMonster();
+               // SpawnEliteMonster();
             }
 
             yield return null;
         }
     }
 
+    void SpawnNormalMonstero()
+    {
+        Camera camera = Camera.main;
+        Vector3 screenBounds = camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, camera.transform.position.z));
+        
+        GameObject monster = normalMonsters[Random.Range(0, normalMonsters.Length)];
+        
+        Vector3 spawnPosition = new Vector3(0, 0, 0);
+        
+        // Randomly choose a side: 0 = top, 1 = bottom, 2 = left, 3 = right
+        int side = Random.Range(0, 4);
+        switch (side)
+        {
+            case 0: // Top
+                spawnPosition = new Vector3(Random.Range(-screenBounds.x, screenBounds.x), screenBounds.y + 1, 0);
+                break;
+            case 1: // Bottom
+                spawnPosition = new Vector3(Random.Range(-screenBounds.x, screenBounds.x), -screenBounds.y - 1, 0);
+                break;
+            case 2: // Left
+                spawnPosition = new Vector3(-screenBounds.x - 1, Random.Range(-screenBounds.y, screenBounds.y), 0);
+                break;
+            case 3: // Right
+                spawnPosition = new Vector3(screenBounds.x + 1, Random.Range(-screenBounds.y, screenBounds.y), 0);
+                break;
+        }
+
+        Instantiate(monster, spawnPosition, Quaternion.identity);
+    }
     void SpawnNormalMonster()
     {
         GameObject monster = normalMonsters[Random.Range(0, normalMonsters.Length)];

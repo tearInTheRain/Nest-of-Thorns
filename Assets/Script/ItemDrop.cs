@@ -27,11 +27,14 @@ public class ItemDrop : MonoBehaviour
     }
 
     // 碰撞检测，检查掉落物是否与玩家发生碰撞
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.tag == "Player")
         {
+            Debug.Log("经验碰撞");
             // 播放拾取动画或音效（如果有的话）
+            PlayerData playerData = other.gameObject.GetComponent<PlayerData>();
+            playerData.addEx(1);
 
             // 消失掉落物
             Destroy(gameObject);
